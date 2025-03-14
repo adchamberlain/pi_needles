@@ -1,12 +1,18 @@
+#==============================================================================
+# Simulation: Estimating Pi by dropping needles on a hardwood floor
+# Related article: https://medium.com/@andrew.chamberlain/a-sewing-circle-method-for-estimating-pi-5a7ec443863b
+# by Andrew Chamberlain, Ph.D.
+# achamberlain.com
+#==============================================================================
+
 import random
 import math
 
-# Parameters
 num_needles = 1000000  # Number of needles to drop
 needle_length = 1.0    # Length of each needle
 line_distance = 2.0    # Distance between parallel lines
 
-# Counter for needles crossing a line
+# Counter for needles crossing a line on the floor
 needles_crossing = 0
 
 # Simulate dropping needles
@@ -28,8 +34,6 @@ for _ in range(num_needles):
     if distance_to_closest_line <= max_crossing_distance:
         needles_crossing += 1
 
-# In Buffon's Needle problem, PI is estimated using the formula:
-# PI = (2 * needle_length * num_needles) / (line_distance * needles_crossing)
 pi_estimate = (2 * needle_length * num_needles) / (line_distance * needles_crossing)
 
 # Print results
