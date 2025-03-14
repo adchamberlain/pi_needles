@@ -1,33 +1,41 @@
 import random
 import math
 
-# Number of random points to generate
-num_points = 1000000
+# Parameters
+num_needles = 1000000  # Number of needles to drop
+needle_length = 1.0    # Length of each needle
+line_distance = 2.0    # Distance between parallel lines
 
-# Counter for points inside the circle
-points_inside_circle = 0
+# Counter for needles crossing a line
+needles_crossing = 0
 
-# Generate random points and count those inside the circle
-for _ in range(num_points):
-    # Generate random coordinates between -1 and 1
-    x = random.uniform(-1, 1)
-    y = random.uniform(-1, 1)
+# Simulate dropping needles
+for _ in range(num_needles):
+    # Generate random position for the center of the needle
+    y_center = random.uniform(0, line_distance)
     
-    # Calculate the distance from the origin (0,0)
-    distance = math.sqrt(x**2 + y**2)
+    # Generate random angle in radians (0 to π)
+    angle = random.uniform(0, math.pi)
     
-    # Check if the point is inside the circle (radius = 1)
-    if distance <= 1:
-        points_inside_circle += 1
+    # Calculate the distance from the center of the needle to the closest line
+    distance_to_closest_line = min(y_center, line_distance - y_center)
+    
+    # Calculate the maximum distance from the center to a line
+    # that would still allow the needle to cross the line
+    max_crossing_distance = (needle_length / 2) * math.sin(angle)
+    
+    # Check if the needle crosses a line
+    if distance_to_closest_line <= max_crossing_distance:
+        needles_crossing += 1
 
-# Calculate the ratio of points inside the circle to total points
-# Since we're using a 2x2 square with a circle of radius 1,
-# the ratio of areas is π/4, so we multiply our result by 4
-pi_estimate = 4 * points_inside_circle / num_points
+# In Buffon's Needle problem, PI is estimated using the formula:
+# PI = (2 * needle_length * num_needles) / (line_distance * needles_crossing)
+pi_estimate = (2 * needle_length * num_needles) / (line_distance * needles_crossing)
 
 # Print results
-print(f"Number of points generated: {num_points}")
-print(f"Number of points inside the circle: {points_inside_circle}")
+print(f"Number of needles dropped: {num_needles}")
+print(f"Number of needles crossing a line: {needles_crossing}")
+print(f"Probability of crossing: {needles_crossing / num_needles}")
 print(f"Estimate of Pi: {pi_estimate}")
 print(f"Actual value of Pi: {math.pi}")
 print(f"Difference: {abs(pi_estimate - math.pi)}")
