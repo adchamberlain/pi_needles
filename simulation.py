@@ -8,7 +8,7 @@
 import random
 import math
 
-num_needles = 1000000  # Number of needles to drop
+num_needles = 10000000  # Number of needles to drop
 needle_length = 1.0    # Length of each needle
 line_distance = 2.0    # Distance between parallel lines
 
